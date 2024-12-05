@@ -3,14 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multiplayer Square Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Draggable Square</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        #square {
+            width: 100px;
+            height: 100px;
+            background-color: red; /* You can change the color or make it random */
+            position: absolute;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Drag and Drop Square</h1>
-    <div id="gameArea">
-        <div id="square"></div>
-    </div>
-    <script src="game.js"></script>
+    <div id="square"></div>
+
+    <script>
+        const square = document.getElementById('square');
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        // Random color for differentiation (you can modify this for multiplayer)
+        square.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+
+        // Mouse down event to start dragging
+        square.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - square.offsetLeft;
+            offsetY = e.clientY - square.offsetTop;
+            square.style.transition = 'none'; // Disable transition during dragging
+        });
+
+        // Mouse move event to move the square
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                square.style.left = `${x}px`;
+                square.style.top = `${y}px`;
+            }
+        });
+
+        // Mouse up event to stop dragging
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            square.style.transition = 'left 0.3s, top 0.3s'; // Re-enable smooth transition after dragging
+        });
+
+        // Optional: Save position on mouse up (you can send this data to your server)
+        // localStorage.setItem("squarePosition", JSON.stringify({x: square.offsetLeft, y: square.offsetTop}));
+    </script>
 </body>
 </html>

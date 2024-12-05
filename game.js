@@ -1,4 +1,4 @@
-const socket = new WebSocket('wss://your-backend.onrender.com');  // Replace with your Render WebSocket URL
+const socket = new WebSocket('https://backend-9d4r.onrender.com');  // Replace with your Render WebSocket URL
 
 let square = document.getElementById('square');
 let gameArea = document.getElementById('gameArea');
